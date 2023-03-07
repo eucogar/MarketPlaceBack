@@ -1,0 +1,16 @@
+@api = http://localhost:4000/api/users
+
+GET {{api}}
+
+###
+POST {{api}}
+Content-Type: application/json
+
+{
+    "name": "eulises",
+    "lastName": "coronado",
+    "city": "Valledupar",
+    "phone": "3225359098",
+    "email": "eucogar7@gmail.com",
+    "password": "119272"
+}
