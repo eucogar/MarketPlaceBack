@@ -1,6 +1,11 @@
 @api = http://localhost:4000/api/users
 
-GET {{api}}
+GET {{api}}/count
+
+
+###
+GET {{api}}/eucogar7@gmail.com
+
 
 ###
 POST {{api}}
@@ -13,4 +18,18 @@ Content-Type: application/json
     "phone": "3225359098",
     "email": "eucogar7@gmail.com",
     "password": "119272"
+}
+
+//update
+###
+PUT {{api}}/eucogar7@gmail.com
+Content-Type: application/json
+
+{
+    "name": "Eulises",
+    "lastName": "Coronado",
+    "city": "Valledupar",
+    "phone": "3225359098",
+    "email": "eucogar7@gmail.com",
+    "password": "1192729833"
 }

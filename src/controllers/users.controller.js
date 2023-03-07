@@ -35,7 +35,7 @@ export const createNewUser = async (req, res) => {
 };
 
 
-export const deleteProductById = async (req, res) => {
+export const deleteUserById = async (req, res) => {
   try {
     const pool = await getConnection();
 
@@ -56,29 +56,41 @@ export const deleteProductById = async (req, res) => {
 export const getTotalUsers = async (req, res) => {
   const pool = await getConnection();
 
-  const result = await pool.request().query(querys.getTotalProducts);
+  const result = await pool.request().query(querys.getTotalUsers);
   console.log(result);
   res.json(result.recordset[0][""]);
 };
 
-export const updateUsers = async (req, res) => {
-  const { description, name, quantity } = req.body;
-
-  // validating
-  if (description == null || name == null || quantity == null) {
-    return res.status(400).json({ msg: "Bad Request. Please fill all fields" });
+export const getUserById = async (req, res) => {
+  const { email } = req.params;
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("email", email)
+      .query(querys.getUserById);
+      console.log(result);
+      res.send(email);
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
   }
+};
 
+export const updateUsersById = async (req, res) => {
+  const { name, lastName, city, phone, email, password } = req.body;
   try {
     const pool = await getConnection();
     await pool
       .request()
       .input("name", sql.VarChar, name)
-      .input("description", sql.Text, description)
-      .input("quantity", sql.Int, quantity)
-      .input("id", req.params.id)
-      .query(querys.updateProductById);
-    res.json({ name, description, quantity });
+      .input("lastName", sql.VarChar, lastName)
+      .input("city", sql.VarChar, city)
+      .input("phone", sql.VarChar, phone)
+      .input("email", sql.VarChar, email)
+      .input("password", sql.VarChar, password)
+      .query(querys.updateUserById);
+    res.json({ name, lastName, city, phone, email, password });
   } catch (error) {
     res.status(500);
     res.send(error.message);
