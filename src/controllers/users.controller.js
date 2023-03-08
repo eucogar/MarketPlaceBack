@@ -36,13 +36,14 @@ export const createNewUser = async (req, res) => {
 
 
 export const deleteUserById = async (req, res) => {
+  const { email } = req.params;
   try {
     const pool = await getConnection();
 
     const result = await pool
       .request()
-      .input("id", req.params.id)
-      .query(querys.deleteProduct);
+      .input("email", email)
+      .query(querys.deleteUser);
 
     if (result.rowsAffected[0] === 0) return res.sendStatus(404);
 
@@ -90,7 +91,7 @@ export const updateUsersById = async (req, res) => {
       .input("email", sql.VarChar, email)
       .input("password", sql.VarChar, password)
       .query(querys.updateUserById);
-    res.json({ name, lastName, city, phone, email, password });
+    res.json({ name, lastName, city, phone, email, password});
   } catch (error) {
     res.status(500);
     res.send(error.message);

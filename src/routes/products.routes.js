@@ -7,7 +7,7 @@ import {
   getTotalProducts,
   updateProductById,
 } from "../controllers/products.controller";
-import { createNewUser, getTotalUsers, getUserById, updateUsersById } from "../controllers/users.controller";
+import { createNewUser, deleteUserById, getTotalUsers, getUserById, updateUsersById } from "../controllers/users.controller";
 
 const router = Router();
 
@@ -24,8 +24,9 @@ router.get("/users/:email", getUserById);
 
 
 router.delete("/products/:id", deleteProductById);
+router.delete("/users/:email", deleteUserById);
 
 router.put("/products/:id", updateProductById);
-router.put("/products/:email", updateUsersById);
+router.put("/users/:email", updateUsersById);
 
 export default router;

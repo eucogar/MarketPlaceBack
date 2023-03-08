@@ -7,6 +7,9 @@ GET {{api}}/count
 GET {{api}}/eucogar7@gmail.com
 
 
+### delete product 
+DELETE {{api}}/eucogar7@gmail.com
+
 ###
 POST {{api}}
 Content-Type: application/json
@@ -27,7 +30,7 @@ Content-Type: application/json
 
 {
     "name": "Eulises",
-    "lastName": "Coronado",
+    "lastName": "Garcia",
     "city": "Valledupar",
     "phone": "3225359098",
     "email": "eucogar7@gmail.com",
