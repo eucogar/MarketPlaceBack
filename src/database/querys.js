@@ -11,6 +11,7 @@ export const querys = {
   addNewUsers: "INSERT INTO [MarketPlace].[dbo].[users] (name, lastName, city, phone, email, password) VALUES (@name,@lastName,@city,@phone,@email,@password);",
   getTotalUsers: "SELECT * FROM users",
   getUserById: "SELECT * FROM users Where email = @email",
+  getUserLogin: "SELECT * FROM users Where email = @email and password = @password",
   updateUserById: "UPDATE [MarketPlace].[dbo].[users] SET  name = @name, lastName = @lastName, city = @city, phone = @phone, email = @email, password = @password WHERE email = @email",
   deleteUser: "DELETE FROM users Where email = @email",
  
