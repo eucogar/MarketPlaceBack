@@ -4,7 +4,24 @@ GET {{api}}/count
 
 
 ###
-GET {{api}}/eucogar7@gmail.com
+GET {{api}}/email
+Content-Type: application/json
+
+{
+    "email": "eucogar7@gmai"
+}
+
+
+
+//Login
+###
+POST  {{api}}/login
+Content-Type: application/json
+
+{
+    "email": "eucogar7@gmail.com",
+    "password": "119272"
+}
 
 
 ### delete product 
@@ -15,11 +32,11 @@ POST {{api}}
 Content-Type: application/json
 
 {
-    "name": "eulises",
+    "name": "pedro",
     "lastName": "coronado",
     "city": "Valledupar",
     "phone": "3225359098",
-    "email": "eucogar7@gmail.com",
+    "email": "pedro@gmail.com",
     "password": "119272"
 }
 
