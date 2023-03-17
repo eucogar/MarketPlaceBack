@@ -1,3 +1,4 @@
+import { json } from "express";
 import { getConnection, querys, sql } from "../database";
 
 export const getProducts = async (req, res) => {
@@ -12,12 +13,13 @@ export const getProducts = async (req, res) => {
 };
 
 export const createNewProduct = async (req, res) => {
-  console.log(req.body);
-  const { image, title, price, category, description, user } = req.body;
+  const {image, title, price, category, description, user } = req.body;
+  const image1 = Buffer.from(image[0]);
+  const image2 = Buffer.from(image[1]);
+  const image3 = Buffer.from(image[2]);
+  const image4 = Buffer.from(image[3]);
   try {
     const pool = await getConnection();
-    console.log('coneccion');
-    console.log(querys.addNewProduct);
     const result = await pool
       .request()
       .input("title", sql.VarChar, title)
@@ -26,15 +28,23 @@ export const createNewProduct = async (req, res) => {
       .input("description", sql.VarChar, description)
       .input("user", sql.NChar, user)
       .query(querys.addNewProduct);
-      console.log('result');
-      console.log(result);
-      await saveimage(image);
-      if (result.rowsAffected == 0) {
-        res.send('Producto No Registrado')
-      } else {
-        console.log(req.body);
-        res.send(req.body)
-      }
+      
+     pool
+      .request()
+      .input("image1", sql.VarBinary(sql.MAX), image1)
+      .input("image2", sql.VarBinary(sql.MAX), image2)
+      .input("image3", sql.VarBinary(sql.MAX), image3)
+      .input("image4", sql.VarBinary(sql.MAX), image4)
+      .query(querys.addNewImage);
+      
+    console.log('result');
+    console.log(result);
+    if (result.rowsAffected == 0) {
+      res.send('Producto No Registrado')
+    } else {
+      console.log(req.body);
+      res.send(req.body)
+    }
   } catch (error) {
     console.log(error);
     res.status(500);
@@ -43,21 +53,65 @@ export const createNewProduct = async (req, res) => {
 
 };
 
-const saveimage = async (image) => {
-  console.log(log);
+export const saveimage = async (req, res) => {
+  const { image } = req.body;
+  console.log(image);
+  const image1 = Buffer.from(image[0]);
+  const image2 = Buffer.from(image[1]);
+  const image3 = Buffer.from(image[2]);
+  const image4 = Buffer.from(image[3]);
+  
   try {
     const pool = await getConnection();
     const result = await pool
       .request()
-      .input("image1", sql.VarBinary, image[0] )
-      .input("image2", sql.VarBinary, image[1] )
-      .input("image3", sql.VarBinary, image[2] )
-      .input("image3", sql.VarBinary, image[3] )
+      .input("image1", sql.VarBinary(sql.MAX), image1)
+      .input("image2", sql.VarBinary(sql.MAX), image2)
+      .input("image3", sql.VarBinary(sql.MAX), image3)
+      .input("image4", sql.VarBinary(sql.MAX), image4)
       .query(querys.addNewImage);
-      console.log(result);
+    console.log('result');
+    console.log(result);
+    if (result.rowsAffected == 0) {
+      res.send('No se guardo la');
+    } else {
+      console.log(req.body);
+      res.send('La imagen se guardó correctamente')
+    }
   } catch (error) {
     console.log(error);
+    res.status(500);
+    res.send(error.message);
   }
+
+};
+///ok
+ const saveimages = async (req, res) => {
+  const { image } = req.body;
+  console.log(image);
+  JSON.stringify(image);
+  console.log(image);
+  const imageBuffer = Buffer.from(image);
+  try {
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("imageBuffer", sql.VarBinary(sql.MAX), imageBuffer)
+      .query(querys.addNewImage2);
+    console.log('result');
+    console.log(result);
+    if (result.rowsAffected == 0) {
+      res.send('No se guardo la');
+    } else {
+      console.log(req.body);
+      res.send('La imagen se guardó correctamente')
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+    res.send(error.message);
+  }
+
 };
 
 export const getProductById = async (req, res) => {

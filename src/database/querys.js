@@ -4,6 +4,7 @@ export const querys = {
   getProducById: "SELECT * FROM products Where Id = @Id",
   addNewProduct: "INSERT INTO [MarketPlace].[dbo].[products] (title, price, category, description, fk_email) VALUES (@title, @price, @category, @description, @user);",
   addNewImage: "INSERT INTO [MarketPlace].[dbo].[image] (image1, image2, image3, image4) VALUES (@image1, @image2, @image3, @image4);",
+  addNewImage2: "INSERT INTO [MarketPlace].[dbo].[image] (image1) VALUES (@imageBuffer);",
   deleteProduct: "DELETE FROM [MarketPlace].[dbo].[products] WHERE Id= @Id",
   getTotalProducts: "SELECT COUNT(*) FROM [MarketPlace].[dbo].[products]",
   updateProductById: "UPDATE [MarketPlace].[dbo].[products] SET title = @title, price = @price, category = @category, description = @description  WHERE Id = @id",
