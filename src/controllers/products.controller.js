@@ -6,6 +6,7 @@ export const getProducts = async (req, res) => {
     const pool = await getConnection();
     const result = await pool.request().query(querys.getAllProducts);
     res.json(result.recordset);
+    await pool.request().query(querys.getTotalImage);
   } catch (error) {
     res.status(500);
     res.send(error.message);

@@ -7,6 +7,7 @@ export const querys = {
   addNewImage2: "INSERT INTO [MarketPlace].[dbo].[image] (image1) VALUES (@imageBuffer);",
   deleteProduct: "DELETE FROM [MarketPlace].[dbo].[products] WHERE Id= @Id",
   getTotalProducts: "SELECT COUNT(*) FROM [MarketPlace].[dbo].[products]",
+  getTotalImage: "SELECT * FROM [MarketPlace].[dbo].[image]",
   updateProductById: "UPDATE [MarketPlace].[dbo].[products] SET title = @title, price = @price, category = @category, description = @description  WHERE Id = @id",
   //users
   
