@@ -1,18 +1,12 @@
 export const querys = {
   //products
-  getAllProducts: "SELECT * FROM products",
+  getAllProducts: "SELECT * FROM product",
+  Producto: "INSERT INTO [MarketPlace].[dbo].[product] (title, price, category, description, fk_email, image1, image2, image3, image4) VALUES (@title, @price, @category, @description, @user, @image1, @image2, @image3, @image4);",
   getProducById: "SELECT * FROM products Where Id = @Id",
-  addNewProduct: "INSERT INTO [MarketPlace].[dbo].[products] (title, price, category, description, fk_email) VALUES (@title, @price, @category, @description, @user);",
-  addNewImage: "INSERT INTO [MarketPlace].[dbo].[image] (image1, image2, image3, image4) VALUES (@image1, @image2, @image3, @image4);",
-  addNewImage2: "INSERT INTO [MarketPlace].[dbo].[image] (image1) VALUES (@imageBuffer);",
   deleteProduct: "DELETE FROM [MarketPlace].[dbo].[products] WHERE Id= @Id",
-  getTotalProducts: "SELECT COUNT(*) FROM [MarketPlace].[dbo].[products]",
-  getTotalImage: "SELECT * FROM [MarketPlace].[dbo].[image]",
-  updateProductById: "UPDATE [MarketPlace].[dbo].[products] SET title = @title, price = @price, category = @category, description = @description  WHERE Id = @id",
-  //users
+   //users
   
   addNewUsers: "INSERT INTO [MarketPlace].[dbo].[users] (name, lastName, city, phone, email, password) VALUES (@name,@lastName,@city,@phone,@email,@password);",
-  getTotalUsers: "SELECT * FROM users",
   getUserById: "SELECT * FROM users Where email = @email",
   getUserLogin: "SELECT * FROM users Where email = @email and password = @password",
   updateUserById: "UPDATE [MarketPlace].[dbo].[users] SET  name = @name, lastName = @lastName, city = @city, phone = @phone, email = @email, password = @password WHERE email = @email",
