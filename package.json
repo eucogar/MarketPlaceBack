@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src --exec babel-node",
     "build": "babel src -d dist",
-    "start": "node dist"
+    "start": "nodemon src --exec babel-node",
+    "test": "jest --watchAll --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,8 @@
     "@babel/core": "^7.14.3",
     "@babel/node": "^7.14.2",
     "@babel/preset-env": "^7.14.4",
-    "nodemon": "^2.0.21"
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.21",
+    "supertest": "^6.3.3"
   }
 }

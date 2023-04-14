@@ -18,49 +18,20 @@ export const createNewUser = async (req, res) => {
       if (result.rowsAffected == 0) {
         console.log('No registrado');
         res.send('No user')
+        await pool.close();
       } else {
         console.log(req.body);
         res.send(req.body)
+        await pool.close();
       }
   } catch (error) {
     res.status(500);
     res.send(error.message);
+    await pool.close();
   }
 };
 
 
-export const deleteUserById = async (req, res) => {
-  const { email } = req.params;
-  try {
-    const pool = await getConnection();
-
-    const result = await pool
-      .request()
-      .input("email", email)
-      .query(querys.deleteUser);
-
-    if (result.rowsAffected[0] === 0) return res.sendStatus(404);
-    return res.sendStatus(204);
-  } catch (error) {
-    res.status(500);
-    res.send(error.message);
-  }
-};
-
-export const getUserById = async (req, res) => {
-  const { email } = req.body;
-  const pool = await getConnection();
-  const result = await pool
-    .request()
-    .input("email", sql.NChar, email)
-    .query(querys.getUserById);
-
-  if (result.rowsAffected == 0) {
-    console.log('No user');
-  } else {
-    console.log(result);
-  }
-};
 
 export const getUserLogin = async (req, res) => {
   try {
@@ -73,14 +44,42 @@ export const getUserLogin = async (req, res) => {
       .query(querys.getUserLogin);
     if (result.rowsAffected == 0) {
       console.log('No user');
-      res.send('No user')
+      res.send('Usuario no encontrado')
+      await pool.close();
     } else {
       console.log(result.recordset[0]);
       res.send(result.recordset[0])
+      await pool.close();
     }
   } catch (error) {
     res.status(500);
     res.send(error.message);
+    await pool.close();
+  }
+};
+
+export const getUser= async (req, res) => {
+  try {
+    const { email } = req.body;
+    console.log(email);
+    const pool = await getConnection();
+    const result = await pool
+      .request()
+      .input("email", sql.NChar, email)
+      .query(querys.getUser);
+    if (result.rowsAffected == 0) {
+      console.log('No user');
+      res.send('Usuario no encontrado')
+      await pool.close();
+    } else {
+      console.log(result.recordset[0]);
+      res.send(result.recordset[0])
+      await pool.close();
+    }
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+    await pool.close();
   }
 };
 
@@ -94,12 +93,13 @@ export const updateUsersById = async (req, res) => {
       .input("lastName", sql.VarChar, lastName)
       .input("city", sql.VarChar, city)
       .input("phone", sql.VarChar, phone)
-      .input("email", sql.NChar, email)
       .input("password", sql.VarChar, password)
       .query(querys.updateUserById);
     res.json({ name, lastName, city, phone, email, password });
+    await pool.close();
   } catch (error) {
     res.status(500);
     res.send(error.message);
+    await pool.close();
   }
 };

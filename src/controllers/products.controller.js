@@ -4,11 +4,14 @@ import { getConnection, querys, sql } from "../database";
 export const getProducts = async (req, res) => {
   try {
     const pool = await getConnection();
-    const result = await pool.request().query(querys.getAllProducts);
+    const result = await pool.request()
+    .query(querys.getAllProducts);
     res.json(result.recordset);
+    await pool.close();
   } catch (error) {
     res.status(500);
     res.send(error.message);
+    await pool.close();
   }
 };
 
@@ -27,18 +30,14 @@ export const createNewProduct = async (req, res) => {
       .input("category", sql.VarChar, category)
       .input("description", sql.VarChar, description)
       .input("user", sql.NChar, user)
-      .input("image1", sql.VarBinary(sql.MAX), image1)
-      .input("image2", sql.VarBinary(sql.MAX), image2)
-      .input("image3", sql.VarBinary(sql.MAX), image3)
-      .input("image4", sql.VarBinary(sql.MAX), image4)
-      .query(querys.Producto)   
-
-    console.log('result');
-    console.log(result);
+      .input("image1", sql.VarChar(sql.MAX), image1)
+      .input("image2", sql.VarChar(sql.MAX), image2)
+      .input("image3", sql.VarChar(sql.MAX), image3)
+      .input("image4", sql.VarChar(sql.MAX), image4)
+      .query(querys.Producto)
     if (result.rowsAffected == 0) {
-      res.send('Producto No Registrado')
+      res.send('Error... intentalo otra vez ')
     } else {
-      console.log(req.body);
       res.send(req.body)
     }
   } catch (error) {
@@ -49,10 +48,22 @@ export const createNewProduct = async (req, res) => {
 
 };
 
-
-
-
-
+export const MyProducts = async (req, res) => {
+  const {user} = req.body;
+  console.log(user);
+  try {
+    const pool = await getConnection();
+    const result = await pool
+        .request()
+        .input("user", sql.NChar, user)
+        .query(querys.MyProducts);
+        res.json(result.recordset);
+        await pool.close();
+  } catch (error) {
+    res.status(500);
+    res.send(error.message);
+  }
+};
 
 export const getProductById = async (req, res) => {
   try {
