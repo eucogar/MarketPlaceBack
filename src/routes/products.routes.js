@@ -18,7 +18,7 @@ router.get("/products/id", getProductById);
 router.delete("/products/id", deleteProductById);
 
 //users
-router.put("/users/updata", updateUsersById);
+router.post("/users/updata", updateUsersById);
 router.post("/users", createNewUser);
 router.post("/users/login", getUserLogin);
 router.post("/getuser", getUser);

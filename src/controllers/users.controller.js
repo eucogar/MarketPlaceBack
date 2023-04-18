@@ -85,21 +85,27 @@ export const getUser= async (req, res) => {
 
 export const updateUsersById = async (req, res) => {
   const { name, lastName, city, phone, email, password } = req.body;
+  console.log(req.body);
   try {
     const pool = await getConnection();
-    await pool
-      .request()
-      .input("name", sql.VarChar, name)
-      .input("lastName", sql.VarChar, lastName)
-      .input("city", sql.VarChar, city)
-      .input("phone", sql.VarChar, phone)
-      .input("password", sql.VarChar, password)
-      .query(querys.updateUserById);
-    res.json({ name, lastName, city, phone, email, password });
-    await pool.close();
+    try {
+      await pool
+        .request()
+        .input("name", sql.VarChar, name)
+        .input("lastName", sql.VarChar, lastName)
+        .input("city", sql.VarChar, city)
+        .input("phone", sql.VarChar, phone)
+        .input("email", sql.NChar, email)
+        .input("password", sql.VarChar, password)
+        .query(querys.updateUserById);
+      res.json({ name, lastName, city, phone, email, password });
+    } finally {
+      pool.close();
+    }
   } catch (error) {
     res.status(500);
     res.send(error.message);
-    await pool.close();
   }
 };
+
+
