@@ -48,6 +48,38 @@ export const createNewProduct = async (req, res) => {
 
 };
 
+export const updateProductsById = async (req, res) => {
+  const {image, title, price, category, description, id } = req.body;
+  const image1 = Buffer.from(image[0]);
+  const image2 = Buffer.from(image[1]);
+  const image3 = Buffer.from(image[2]);
+  const image4 = Buffer.from(image[3]);
+  try {
+    const pool = await getConnection();
+    try {
+      await pool
+        .request()
+        .input("title", sql.VarChar, title)
+        .input("price", sql.Float, parseInt(price))
+        .input("id", sql.Int, id)
+        .input("category", sql.VarChar, category)
+        .input("description", sql.VarChar, description)
+        .input("image1", sql.VarChar(sql.MAX), image1)
+        .input("image2", sql.VarChar(sql.MAX), image2)
+        .input("image3", sql.VarChar(sql.MAX), image3)
+        .input("image4", sql.VarChar(sql.MAX), image4)
+        .query(querys.updateProductById);
+      res.json({image1, image2, image3, image4, title, price, category, description, id });
+    } finally {
+      pool.close();
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500);
+    res.send(error.message);
+  }
+};
+
 export const MyProducts = async (req, res) => {
   const {user} = req.body;
   console.log(user);

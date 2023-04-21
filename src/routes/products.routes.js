@@ -4,7 +4,8 @@ import {
     createNewProduct,
     getProductById,
     deleteProductById,
-    MyProducts
+    MyProducts,
+    updateProductsById
 } from "../controllers/products.controller";
 import { createNewUser, getUser, getUserLogin, updateUsersById } from "../controllers/users.controller";
 
@@ -15,10 +16,11 @@ router.get("/products", getProducts);
 router.post("/myproducts", MyProducts);
 router.post("/products", createNewProduct);
 router.get("/products/id", getProductById);
-router.delete("/products/id", deleteProductById);
+router.delete("/products/:id", deleteProductById);
+router.put("/products/updata", updateProductsById);
 
 //users
-router.post("/users/updata", updateUsersById);
+router.put("/users/updata", updateUsersById);
 router.post("/users", createNewUser);
 router.post("/users/login", getUserLogin);
 router.post("/getuser", getUser);

@@ -3,8 +3,9 @@ export const querys = {
   getAllProducts: "SELECT * FROM product",
   Producto: "INSERT INTO [MarketPlace].[dbo].[product] (title, price, category, description, fk_email, image1, image2, image3, image4) VALUES (@title, @price, @category, @description, @user, @image1, @image2, @image3, @image4);",
   getProducById: "SELECT * FROM products Where Id = @Id",
-  deleteProduct: "DELETE FROM [MarketPlace].[dbo].[products] WHERE Id= @Id",
+  deleteProduct: "DELETE FROM [MarketPlace].[dbo].[product] WHERE Id= @Id",
   MyProducts: "SELECT * FROM product WHERE fk_email = @user",
+  updateProductById: " UPDATE [MarketPlace].[dbo].[product] SET title = @title, price =  @price, category = @category, description = @description, image1 = @image1, image2 = @image2, image3 = @image3, image4 = @image4 WHERE Id= @Id",
 
    //users
   addNewUsers: "INSERT INTO [MarketPlace].[dbo].[users] (name, lastName, city, phone, email, password) VALUES (@name,@lastName,@city,@phone,@email,@password);",
