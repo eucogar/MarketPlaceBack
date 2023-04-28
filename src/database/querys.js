@@ -6,7 +6,9 @@ export const querys = {
   deleteProduct: "DELETE FROM [MarketPlace].[dbo].[product] WHERE Id= @Id",
   MyProducts: "SELECT * FROM product WHERE fk_email = @user",
   updateProductById: " UPDATE [MarketPlace].[dbo].[product] SET title = @title, price =  @price, category = @category, description = @description, image1 = @image1, image2 = @image2, image3 = @image3, image4 = @image4 WHERE Id= @Id",
-
+  addfavorite: "INSERT INTO [MarketPlace].[dbo].[favorite] (fk_email, fk_product ) VALUES (@user, @id)",
+  deletefavorite: "DELETE FROM [MarketPlace].[dbo].[favorite] WHERE Id= @Id",
+  getallfavorite: "SELECT * FROM favorite WHERE fk_email = @user",
    //users
   addNewUsers: "INSERT INTO [MarketPlace].[dbo].[users] (name, lastName, city, phone, email, password) VALUES (@name,@lastName,@city,@phone,@email,@password);",
   getUserById: "SELECT * FROM users Where email = @email",

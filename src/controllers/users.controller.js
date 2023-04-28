@@ -2,7 +2,6 @@ import { getConnection, querys, sql } from "../database";
 
 
 export const createNewUser = async (req, res) => {
-
   const { name, lastName, city, phone, email, password } = req.body;
   try {
     const pool = await getConnection();
