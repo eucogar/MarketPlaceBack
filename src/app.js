@@ -1,9 +1,8 @@
-import express from "express";
-import cors from "cors";
-import productRoutes from "./routes/products.routes";
-import morgan from "morgan";
-
-import config from "./config";
+const express = require("express");
+const cors = require("cors");
+const productRoutes = require("./routes/products.routes");
+const morgan = require("morgan");
+const config = require("./config");
 
 const bodyParser = require('body-parser');
 const app = express();
@@ -27,4 +26,4 @@ app.use(express.json());
 // Routes
 app.use("/api", productRoutes);
 
-export default app;
+module.exports = app;

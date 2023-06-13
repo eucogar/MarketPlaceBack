@@ -1,7 +1,7 @@
-import sql from "mssql";
-import config from "../config";
+const sql = require("mssql");
+const config = require("../config");
 
-export const dbSettings = {
+const dbSettings = {
   user: config.dbUser,
   password: config.dbPassword,
   server: config.dbServer,
@@ -12,7 +12,7 @@ export const dbSettings = {
   },
 };
 
-export const getConnection = async () => {
+const getConnection = async () => {
   try {
     const pool = await sql.connect(dbSettings);
     return pool;
@@ -21,4 +21,8 @@ export const getConnection = async () => {
   }
 };
 
-export { sql };
+module.exports = {
+  sql,
+  dbSettings,
+  getConnection,
+};

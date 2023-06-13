@@ -1,0 +1,28 @@
+{
+  "config": {
+    "target": "https://placemarket.herokuapp.com",
+    "phases": [
+      {
+        "duration": 60,
+        "arrivalRate": 10
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "name": "Prueba de estrés del backend (npm install -g artillery run -> artillery run config.json)",
+      "flow": [
+        {
+          "post": {
+            "url": "/api/users/login",
+            "json": {
+              "email": "eulises@gmail.com",
+              "password": "11927298@ec"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+ 

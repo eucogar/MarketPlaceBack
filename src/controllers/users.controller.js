@@ -1,110 +1,88 @@
-import { getConnection, querys, sql } from "../database";
+const userService = require("../services/userService");
 
-
-export const createNewUser = async (req, res) => {
+const createNewUser = async (req, res) => {
   const { name, lastName, city, phone, email, password } = req.body;
   try {
-    const pool = await getConnection();
-    const result = await pool
-      .request()
-      .input("name", sql.VarChar, name)
-      .input("lastName", sql.VarChar, lastName)
-      .input("city", sql.VarChar, city)
-      .input("phone", sql.VarChar, phone)
-      .input("email", sql.NChar, email)
-      .input("password", sql.VarChar, password)
-      .query(querys.addNewUsers);
-      if (result.rowsAffected == 0) {
-        console.log('No registrado');
-        res.send('No user')
-        await pool.close();
-      } else {
-        console.log(req.body);
-        res.send(req.body)
-        await pool.close();
-      }
-  } catch (error) {
-    res.status(500);
-    res.send(error.message);
-    await pool.close();
-  }
-};
-
-
-
-export const getUserLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    const pool = await getConnection();
-    const result = await pool
-      .request()
-      .input("email", sql.NChar, email)
-      .input("password", sql.VarChar, password)
-      .query(querys.getUserLogin);
-    if (result.rowsAffected == 0) {
-      console.log('No user');
-      res.send('Usuario no encontrado')
-      await pool.close();
+    const userData = { name, lastName, city, phone, email, password };
+    const user = await userService.createNewUser(userData);
+    if (user === null) {
+      console.log('No registrado');
+      res.status(403).send('No registrado');
     } else {
-      console.log(result.recordset[0]);
-      res.send(result.recordset[0])
-      await pool.close();
+      console.log(req.body);
+      res.send(req.body);
     }
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
-    await pool.close();
+    console.log(error.message);
+    res.status(500).send(error.message);
   }
 };
 
-export const getUser= async (req, res) => {
+const getUserLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const credentials = { email, password };
+    const user = await userService.getUserLogin(credentials);
+    if (user === null) {
+      res.status(401).send('Credenciales incorrectas');
+    } else {
+      console.log(user);
+      res.send(user);
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send(error.message);
+  }
+};
+
+const getUser = async (req, res) => {
   try {
     const { email } = req.body;
     console.log(email);
-    const pool = await getConnection();
-    const result = await pool
-      .request()
-      .input("email", sql.NChar, email)
-      .query(querys.getUser);
-    if (result.rowsAffected == 0) {
+    const user = await userService.getUser(email);
+    if (user === null) {
       console.log('No user');
-      res.send('Usuario no encontrado')
-      await pool.close();
+      res.send('Usuario no encontrado');
     } else {
-      console.log(result.recordset[0]);
-      res.send(result.recordset[0])
-      await pool.close();
+      console.log(user);
+      res.send(user);
     }
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
-    await pool.close();
+    console.log(error.message);
+    res.status(500).send(error.message);
   }
 };
 
-export const updateUsersById = async (req, res) => {
+const updateUsersById = async (req, res) => {
   const { name, lastName, city, phone, email, password } = req.body;
   console.log(req.body);
   try {
-    const pool = await getConnection();
-    try {
-      await pool
-        .request()
-        .input("name", sql.VarChar, name)
-        .input("lastName", sql.VarChar, lastName)
-        .input("city", sql.VarChar, city)
-        .input("phone", sql.VarChar, phone)
-        .input("email", sql.NChar, email)
-        .input("password", sql.VarChar, password)
-        .query(querys.updateUserById);
-      res.json({ name, lastName, city, phone, email, password });
-    } finally {
-      pool.close();
-    }
+    const userData = { name, lastName, city, phone, email, password };
+    const updatedUser = await userService.updateUsersById(userData);
+    res.json(updatedUser);
   } catch (error) {
-    res.status(500);
-    res.send(error.message);
+    console.log(error.message);
+    res.status(500).send(error.message);
   }
 };
 
+const updatePassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    console.log(req.body);
+    const userData = { email, password };
+    const result = await userService.updatePassword(userData);
+    res.send(result);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send(error.message);
+  }
+};
 
+module.exports = {
+  createNewUser,
+  getUserLogin,
+  getUser,
+  updateUsersById,
+  updatePassword,
+};

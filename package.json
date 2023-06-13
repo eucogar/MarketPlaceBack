@@ -1,12 +1,12 @@
 {
-  "name": "node-sqlserver-restapi",
+  "name": "sqlserver-restapi",
   "version": "1.0.0",
-  "description": "",
+  "description": "nodejs and Microsoft SQL Server Datbase REST API",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src --exec babel-node",
     "build": "babel src -d dist",
-    "start": "nodemon src --exec babel-node",
+    "start": "node src/index.js",
     "test": "jest --watchAll --detectOpenHandles"
   },
   "keywords": [],
@@ -18,15 +18,24 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "mssql": "^7.1.0",
-    "npx": "^10.2.2"
+    "npx": "^10.2.2",
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
     "@babel/core": "^7.14.3",
     "@babel/node": "^7.14.2",
-    "@babel/preset-env": "^7.14.4",
+    "@babel/preset-env": "^7.21.5",
     "jest": "^29.5.0",
-    "nodemon": "^2.0.21",
+    "nodemon": "^2.0.22",
     "supertest": "^6.3.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eucogar/MarketPlaceBack.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eucogar/MarketPlaceBack/issues"
+  },
+  "homepage": "https://github.com/eucogar/MarketPlaceBack#readme"
 }
